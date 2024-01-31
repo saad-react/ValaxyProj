@@ -1,1 +1,1 @@
-# ValaxyProj
+This is a Practice Project
