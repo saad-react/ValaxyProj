@@ -1,0 +1,10 @@
+ [jenkins-master]
+ 10.1.1.193
+ [jenkins-master:vars]
+ ansible_user=ubuntu
+ ansible_ssh_private_key_file=/opt/mum.pem
+ [maven]
+ 10.1.1.23
+ [maven:vars]
+ ansible_user=ubuntu
+ ansible_ssh_private_key_file=/opt/mum.pem
