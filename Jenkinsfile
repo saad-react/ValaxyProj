@@ -25,6 +25,12 @@ environment{
             }
         }
     }
+        stage("quality gate"){
+            steps {
+                script {
+                  waitForQualityGate abortPipeline: false, credentialsId: 'sonarqube-cred' 
+                }
+           }
 
         
 }
