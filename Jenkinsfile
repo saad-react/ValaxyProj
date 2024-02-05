@@ -12,9 +12,17 @@ environment{
     stages {
         stage("build"){
             steps{
-                sh 'mvn package -DskipTests'
+                sh 'mvn package -Dmaven.test.skip=true'
                 // sh 'mvn clean deploy'
                 
+            }
+        }
+        
+        stage("test"){
+            steps{
+                echo "----------- unit test started ----------"
+                sh 'mvn surefire-report:report'
+                 echo "----------- unit test Complted ----------"
             }
         }
 
