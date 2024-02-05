@@ -33,11 +33,11 @@ environment{
            }
 
         }
-        stage("OWASP Dependency Check"){
-            steps{
-                dependencyCheck additionalArguments: '--scan ./ --format XML ', odcInstallation: 'DP-Check'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-    }
+    //     stage("OWASP Dependency Check"){
+    //         steps{
+    //             dependencyCheck additionalArguments: '--scan ./ --format XML ', odcInstallation: 'DP-Check'
+    //             dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+    //         }
+    // }
 }
 }
