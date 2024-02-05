@@ -11,7 +11,7 @@ environment{
     stages {
         stage("build"){
             steps{
-                sh 'mvn package -DskipTests
+                sh 'mvn package -DskipTests'
             }
         }
 
