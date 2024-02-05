@@ -1,3 +1,4 @@
+def registry = 'https://yccpl.jfrog.io/'
 pipeline {
     agent {
         node{
@@ -11,6 +12,7 @@ environment{
     stages {
         stage("build"){
             steps{
+                sh 'mvn clean deploy'
                 sh 'mvn package -DskipTests'
             }
         }
@@ -33,11 +35,32 @@ environment{
            }
 
         }
-    //     stage("OWASP Dependency Check"){
-    //         steps{
-    //             dependencyCheck additionalArguments: '--scan ./ --format XML ', odcInstallation: 'DP-Check'
-    //             dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-    //         }
-    // }
+
+        stage("Jar Publish") {
+            steps {
+                script {
+                        echo '<--------------- Jar Publish Started --------------->'
+                        def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"artifact-cred"
+                        def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
+                        def uploadSpec = """{
+                            "files": [
+                                {
+                                "pattern": "jarstaging/(*)",
+                                "target": "maventest-libs-release-local/{1}",
+                                "flat": "false",
+                                "props" : "${properties}",
+                                "exclusions": [ "*.sha1", "*.md5"]
+                                }
+                            ]
+                        }"""
+                        def buildInfo = server.upload(uploadSpec)
+                        buildInfo.env.collect()
+                        server.publishBuildInfo(buildInfo)
+                        echo '<--------------- Jar Publish Ended --------------->'  
+                
+                }
+        }   
+    }
+    
 }
 }
