@@ -13,7 +13,7 @@ environment{
         stage("build"){
             steps{
                 sh 'mvn package -DskipTests'
-                sh 'mvn clean deploy'
+                // sh 'mvn clean deploy'
                 
             }
         }
